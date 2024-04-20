@@ -47,6 +47,34 @@ func (s *EasySlice[T]) Cap() int {
 	return cap(s.Data)
 }
 
+// Returns a shallow copy of the slice.
+func (s *EasySlice[T]) Copy() EasySlice[T] {
+	n := NewSlice[T](s.Len(), s.Cap())
+	copy(n.Data, s.Data)
+	return n
+}
+
+// Returns a shallow copy with last item being value.
+func (s *EasySlice[T]) CopyAppend(value T) EasySlice[T] {
+	n := s.Copy()
+	n.Append(value)
+	return n
+}
+
+// Returns a shallow copy with values appended at the end.
+func (s *EasySlice[T]) CopyAppendMore(values ...T) EasySlice[T] {
+	n := s.Copy()
+	n.AppendSlice(values)
+	return n
+}
+
+// Returns a shallow copy with values appended at the end.
+func (s *EasySlice[T]) CopyAppendSlice(values []T) EasySlice[T] {
+	n := s.Copy()
+	n.AppendSlice(values)
+	return n
+}
+
 // Returns bool indicating whether slice is empty.
 func (s *EasySlice[T]) Empty() bool {
 	return s.Len() == 0

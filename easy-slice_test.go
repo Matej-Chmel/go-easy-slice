@@ -14,6 +14,21 @@ func check[T comparable](a, b T, t *testing.T) {
 	}
 }
 
+func TestCopyAppend(t *testing.T) {
+	s0 := eas.NewSlice[float64](5, 10)
+
+	check(s0.String(), "[0 0 0 0 0]", t)
+	check(s0.Cap(), 10, t)
+
+	s1 := s0.CopyAppend(6)
+	check(s1.String(), "[0 0 0 0 0 6]", t)
+	check(s1.Cap(), 10, t)
+
+	s2 := s0.CopyAppendMore(8.4, 8.9, 90)
+	check(s2.String(), "[0 0 0 0 0 8.4 8.9 90]", t)
+	check(s2.Cap(), 10, t)
+}
+
 func TestInt32(t *testing.T) {
 	s := eas.NewSlice[int32](4)
 	s.Set(0, 4)
